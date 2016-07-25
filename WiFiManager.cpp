@@ -356,18 +356,18 @@ void WiFiManager::handleRoot() {
     return;
   }
 
-  String page = FPSTR(HTTP_HEAD);
+  String page = FPSTR(HTML_HEAD);
   page.replace("{v}", "Options");
-  page += FPSTR(HTTP_SCRIPT);
-  page += FPSTR(HTTP_STYLE);
+  page += FPSTR(HTML_SCRIPT);
+  page += FPSTR(HTML_STYLE);
   page += _customHeadElement;
-  page += FPSTR(HTTP_HEAD_END);
+  page += FPSTR(HTML_HEAD_END);
   page += "<h1>";
   page += _apName;
   page += "</h1>";
   page += F("<h3>WiFiManager</h3>");
-  page += FPSTR(HTTP_PORTAL_OPTIONS);
-  page += FPSTR(HTTP_END);
+  page += FPSTR(HTML_PORTAL_OPTIONS);
+  page += FPSTR(HTML_END);
 
   server->send(200, "text/html", page);
 
@@ -376,12 +376,12 @@ void WiFiManager::handleRoot() {
 /** Wifi config page handler */
 void WiFiManager::handleWifi(boolean scan) {
 
-  String page = FPSTR(HTTP_HEAD);
+  String page = FPSTR(HTML_HEAD);
   page.replace("{v}", "Config ESP");
-  page += FPSTR(HTTP_SCRIPT);
-  page += FPSTR(HTTP_STYLE);
+  page += FPSTR(HTML_SCRIPT);
+  page += FPSTR(HTML_STYLE);
   page += _customHeadElement;
-  page += FPSTR(HTTP_HEAD_END);
+  page += FPSTR(HTML_HEAD_END);
 
   if (scan) {
     int n = WiFi.scanNetworks();
@@ -436,7 +436,7 @@ void WiFiManager::handleWifi(boolean scan) {
         int quality = getRSSIasQuality(WiFi.RSSI(indices[i]));
 
         if (_minimumQuality == -1 || _minimumQuality < quality) {
-          String item = FPSTR(HTTP_ITEM);
+          String item = FPSTR(HTML_ITEM);
           String rssiQ;
           rssiQ += quality;
           item.replace("{v}", WiFi.SSID(indices[i]));
@@ -458,7 +458,7 @@ void WiFiManager::handleWifi(boolean scan) {
     }
   }
 
-  page += FPSTR(HTTP_FORM_START);
+  page += FPSTR(HTML_FORM_START);
   char parLength[2];
   // add the extra parameters to the form
   for (int i = 0; i < _paramsCount; i++) {
@@ -466,7 +466,7 @@ void WiFiManager::handleWifi(boolean scan) {
       break;
     }
 
-    String pitem = FPSTR(HTTP_FORM_PARAM);
+    String pitem = FPSTR(HTML_FORM_PARAM);
     if (_params[i]->getID() != NULL) {
       pitem.replace("{i}", _params[i]->getID());
       pitem.replace("{n}", _params[i]->getID());
@@ -487,7 +487,7 @@ void WiFiManager::handleWifi(boolean scan) {
 
   if (_sta_static_ip) {
 
-    String item = FPSTR(HTTP_FORM_PARAM);
+    String item = FPSTR(HTML_FORM_PARAM);
     item.replace("{i}", "ip");
     item.replace("{n}", "ip");
     item.replace("{p}", "Static IP");
@@ -496,7 +496,7 @@ void WiFiManager::handleWifi(boolean scan) {
 
     page += item;
 
-    item = FPSTR(HTTP_FORM_PARAM);
+    item = FPSTR(HTML_FORM_PARAM);
     item.replace("{i}", "gw");
     item.replace("{n}", "gw");
     item.replace("{p}", "Static Gateway");
@@ -505,7 +505,7 @@ void WiFiManager::handleWifi(boolean scan) {
 
     page += item;
 
-    item = FPSTR(HTTP_FORM_PARAM);
+    item = FPSTR(HTML_FORM_PARAM);
     item.replace("{i}", "sn");
     item.replace("{n}", "sn");
     item.replace("{p}", "Subnet");
@@ -517,10 +517,10 @@ void WiFiManager::handleWifi(boolean scan) {
     page += "<br/>";
   }
 
-  page += FPSTR(HTTP_FORM_END);
-  page += FPSTR(HTTP_SCAN_LINK);
+  page += FPSTR(HTML_FORM_END);
+  page += FPSTR(HTML_SCAN_LINK);
 
-  page += FPSTR(HTTP_END);
+  page += FPSTR(HTML_END);
 
   server->send(200, "text/html", page);
 
@@ -570,14 +570,14 @@ void WiFiManager::handleWifiSave() {
     optionalIPFromString(&_sta_static_sn, sn.c_str());
   }
 
-  String page = FPSTR(HTTP_HEAD);
+  String page = FPSTR(HTML_HEAD);
   page.replace("{v}", "Credentials Saved");
-  page += FPSTR(HTTP_SCRIPT);
-  page += FPSTR(HTTP_STYLE);
+  page += FPSTR(HTML_SCRIPT);
+  page += FPSTR(HTML_STYLE);
   page += _customHeadElement;
-  page += FPSTR(HTTP_HEAD_END);
-  page += FPSTR(HTTP_SAVED);
-  page += FPSTR(HTTP_END);
+  page += FPSTR(HTML_HEAD_END);
+  page += FPSTR(HTML_SAVED);
+  page += FPSTR(HTML_END);
 
   server->send(200, "text/html", page);
 
@@ -590,12 +590,12 @@ void WiFiManager::handleWifiSave() {
 void WiFiManager::handleInfo() {
   DEBUG_WM(F("Info"));
 
-  String page = FPSTR(HTTP_HEAD);
+  String page = FPSTR(HTML_HEAD);
   page.replace("{v}", "Info");
-  page += FPSTR(HTTP_SCRIPT);
-  page += FPSTR(HTTP_STYLE);
+  page += FPSTR(HTML_SCRIPT);
+  page += FPSTR(HTML_STYLE);
   page += _customHeadElement;
-  page += FPSTR(HTTP_HEAD_END);
+  page += FPSTR(HTML_HEAD_END);
   page += F("<dl>");
   page += F("<dt>Chip ID</dt><dd>");
   page += ESP.getChipId();
@@ -619,7 +619,7 @@ void WiFiManager::handleInfo() {
   page += WiFi.macAddress();
   page += F("</dd>");
   page += F("</dl>");
-  page += FPSTR(HTTP_END);
+  page += FPSTR(HTML_END);
 
   server->send(200, "text/html", page);
 
@@ -630,14 +630,14 @@ void WiFiManager::handleInfo() {
 void WiFiManager::handleReset() {
   DEBUG_WM(F("Reset"));
 
-  String page = FPSTR(HTTP_HEAD);
+  String page = FPSTR(HTML_HEAD);
   page.replace("{v}", "Info");
-  page += FPSTR(HTTP_SCRIPT);
-  page += FPSTR(HTTP_STYLE);
+  page += FPSTR(HTML_SCRIPT);
+  page += FPSTR(HTML_STYLE);
   page += _customHeadElement;
-  page += FPSTR(HTTP_HEAD_END);
+  page += FPSTR(HTML_HEAD_END);
   page += F("Module will reset in a few seconds.");
-  page += FPSTR(HTTP_END);
+  page += FPSTR(HTML_END);
   server->send(200, "text/html", page);
 
   DEBUG_WM(F("Sent reset page"));
@@ -665,7 +665,7 @@ void WiFiManager::handleNotFound() {
   message += "URI: ";
   message += server->uri();
   message += "\nMethod: ";
-  message += ( server->method() == HTTP_GET ) ? "GET" : "POST";
+  message += ( server->method() == _GET ) ? "GET" : "POST";
   message += "\nArguments: ";
   message += server->args();
   message += "\n";
@@ -712,14 +712,20 @@ void WiFiManager::setRemoveDuplicateAPs(boolean removeDuplicates) {
   _removeDuplicateAPs = removeDuplicates;
 }
 
-
-
 template <typename Generic>
 void WiFiManager::DEBUG_WM(Generic text) {
+// Select on which pin will happen the text debug
+#ifndef SOFTWARE_SERIAL_DEBUG
   if (_debug) {
     Serial.print("*WM: ");
     Serial.println(text);
   }
+#else
+  if (_debug) {
+    SOFTWARE_SERIAL_OBJECT.print("*WM: ");
+    SOFTWARE_SERIAL_OBJECT.println(text);
+  }
+#endif
 }
 
 int WiFiManager::getRSSIasQuality(int RSSI) {
