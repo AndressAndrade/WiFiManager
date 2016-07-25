@@ -173,6 +173,7 @@ extern const char HTML_END[]            PROGMEM;
 // Enable debug using software serial, instead of the default Serial
 #define SOFTWARE_SERIAL_DEBUG
 #define SOFTWARE_SERIAL_OBJECT  ESPSerial
+#define SOFTWARE_SERIAL_SPEED   115200
 #define DEBUG_RX_PIN            12
 #define DEBUG_TX_PIN            13
 

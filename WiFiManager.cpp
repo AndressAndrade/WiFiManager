@@ -722,6 +722,7 @@ void WiFiManager::DEBUG_WM(Generic text) {
   }
 #else
   if (_debug) {
+    SOFTWARE_SERIAL_OBJECT.begin(SOFTWARE_SERIAL_SPEED)
     SOFTWARE_SERIAL_OBJECT.print("*WM: ");
     SOFTWARE_SERIAL_OBJECT.println(text);
   }
