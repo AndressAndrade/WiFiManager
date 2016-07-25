@@ -172,14 +172,14 @@ extern const char HTML_END[]            PROGMEM;
 
 // Enable debug using software serial, instead of the default Serial
 #define SOFTWARE_SERIAL_DEBUG
-#define DEBUG_PORT      ESPSerial
-#define DEBUG_RX_PIN    12
-#define DEBUG_TX_PIN    13
+#define SOFTWARE_SERIAL_OBJECT  ESPSerial
+#define DEBUG_RX_PIN            12
+#define DEBUG_TX_PIN            13
 
 #ifdef SOFTWARE_SERIAL_DEBUG
 #include <SoftwareSerial.h>
 // Software Serial should be static since this file can be called multiple times
-SoftwareSerial static DEBUG_PORT(DEBUG_RX_PIN, DEBUG_TX_PIN);
+SoftwareSerial static SOFTWARE_SERIAL_OBJECT(DEBUG_RX_PIN, DEBUG_TX_PIN);
 #endif
 
 class WiFiManagerParameter {
